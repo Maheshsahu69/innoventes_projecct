@@ -1,74 +1,33 @@
-import { UserType, AccountType } from "./constants";
+export const JOIN_SUCCESS = 'JOIN_SUCCESS';
+export const JOIN_FAIL = 'JOIN_FAIL';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const RESEND_PASSWORD = 'RESEND_PASSWORD';
+export const RESEND_PASSWORD_FAIL = 'RESEND_PASSWORD_FAIL';
 
-export interface User {
-  id: number,
-  username: string,
-  business_name?: string,
-  business_address?: string,
-  email: string,
-  telephone: string,
-  user_type: string,
-  account_type: string,
-  facebook_uid?: string,
-  state?: string,
-  zipcode?: string,
-  url?: string,
-  date_of_birth?: string,
-  gender?: string,
-  photo_url?: string,
-  temporary_password?: string,
-  facebook_account_type?: string,
-  userid?: string,
-  bio?: string,
-  verified: boolean,
-  location?: string
-}
+export const SET_ALERT = 'SET_ALERT';
+export const REMOVE_ALERT = 'REMOVE_ALERT';
 
-export interface AlertMessage {
-  msg: string;
-  alertType: string;
-  id: string;
-}
+export const FETCH_POST = 'FETCH_POST';
 
-export interface JoinForm {
-  name: string,
-  username: string,
-  email: string,
-  password: string,
-  location?: string,
-  date_of_birth?: string,
-  gender?: string,
-  user_type: UserType,
-  account_type: AccountType,
-}
+export const GET_POSTS_SUCCESS = 'GET_POSTS_SUCCESS';
+export const GET_POSTS_FAIL = 'GET_POSTS_FAIL';
+export const GET_POSTS_COMPLETE = 'GET_POSTS_COMPLETE';
 
-export interface Post {
-  id: number,
-  facebook_uid?: number,
-  name: string,
-  venue: string,
-  city: string,
-  thumbnail_url: string,
-  photo_url: string,
-  created_at: string,
-  comment: string,
-  user_id: number,
-  emoji: string,
-  location_id: number
-}
+export const GET_POST_DETAIL_SUCCESS = 'GET_POST_DETAIL_SUCCESS';
+export const GET_POST_DETAIL_FAIL = 'GET_POST_DETAIL_FAIL';
 
-export interface PostAttribute {
-  favourite: boolean,
-  blocked: boolean,
-  liked: boolean,
-  like_id?: number,
-  like_count: number,
-  comment_count: number,
-  photo_url?: string
-}
+export const SEARCH_QUERY = 'SEARCH_QUERY';
+export const SEARCH_POST_SUCCESS = 'SEARCH_POST_SUCCESS';
 
-export interface PostDetail extends Post {
-  latest_comments: string,
-  attributes: PostAttribute
-}
+export const FETCH_PROFILE = 'FETCH_PROFILE';
 
+export const GET_PROFILE_SUCCESS = 'GET_PROFILE_SUCCESS';
+export const GET_PROFILE_FAIL = 'GET_PROFILE_FAIL';
+
+export const USER_POSTS_SUCCESS = 'USER_POSTS_SUCCESS';
+export const USER_POSTS_FAIL = 'USER_POSTS_FAIL';
+export const USER_POSTS_COMPLETE = 'USER_POSTS_COMPLETE';
+
+export const SW_INIT = 'SW_INIT';
+export const SW_UPDATE = 'SW_UPDATE';
