@@ -1,0 +1,48 @@
+.bg-img {
+  --background: #fff url("../images/vault29-background.png") no-repeat center
+    center / cover;
+}
+
+.top-img {
+  height: 140px;
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+
+.vault-txt {
+  text-align: center;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 40px;
+}
+.txt-title {
+  text-align: center;
+  color: #ffffff;
+  font-size: 25px;
+}
+.btn-facebook,
+.btn-join,
+.btn-login {
+  color: #ffffff;
+  --border-color: #ffffff;
+  --border-width: 1px;
+}
+
+.btn-background {
+  background-color: #a86fa2;
+  border-radius: 5px;
+}
+.link-login,
+.link-join {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.modal-fullscreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  /* width: 100%;
+  height: 100%; */
+}

@@ -1,0 +1,10 @@
+.avatar-profile {
+    width: 100px;
+    height: 100px;
+    margin:0 auto;
+}
+
+.opaque-grid {
+  background-color: #000000;
+  opacity: 0.6;
+}

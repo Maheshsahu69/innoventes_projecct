@@ -1,0 +1,26 @@
+.bg-img-user-type {
+    --background: #fff url("../images/vault29-blurred-background.jpg") no-repeat
+      center center / cover;
+  }
+
+  .close-button {
+    width: 50px;
+  }
+
+  .logo, .winary-image, .consumer-image, .restaurant-image{
+    height: 125px;
+    text-align: center;
+    padding-top: 18px;
+    padding-bottom: 10px;
+  }
+  .txt-select-user-type, .txt-consumer, .txt-winery, .txt-restaurant {
+    text-align: center;
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  .link-decoration {
+    color: #ffffff;
+    text-decoration: none;
+  }
