@@ -1,36 +1,22 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import { SET_ALERT, REMOVE_ALERT } from '../actions/types';
+import { AlertActionTypes } from '../actions/alert';
 import { AlertMessage } from '../types';
 
-interface SetAlertAction {
-  type: typeof SET_ALERT,
-  payload: AlertMessage
+export interface AlertState {
+  alerts: AlertMessage[];
 }
 
-interface RemoveAlertAction {
-  type: typeof REMOVE_ALERT,
-  id: string
+const initialState: AlertState = {
+  alerts: []
 }
 
-export type AlertActionTypes = SetAlertAction | RemoveAlertAction;
-
-const setAlertAction = (alert: AlertMessage): AlertActionTypes => {
-  return {
-    type: SET_ALERT,
-    payload: alert
+export default function (state = initialState, action: AlertActionTypes) {
+  switch (action.type) {
+    case SET_ALERT:
+      return { ...state, alerts: [...state.alerts, action.payload] };
+    case REMOVE_ALERT:
+      return { ...state, alerts: state.alerts.filter(alert => alert.id !== action.id) };
+    default:
+      return state;
   }
 }
-
-const removeAlertAction = (id: string): AlertActionTypes => {
-  return {
-    type: REMOVE_ALERT,
-    id
-  }
-}
-
-export const setAlert = (msg: string, alertType: string, timeout = 5000) => (dispatch: (arg0: AlertActionTypes) => void) => {
-  const id = uuidv4();
-  dispatch(setAlertAction({ msg, alertType, id }));
-  setTimeout(() => dispatch(removeAlertAction(id)), timeout);
-};

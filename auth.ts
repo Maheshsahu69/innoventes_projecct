@@ -1,114 +1,32 @@
- import { LOGIN_SUCCESS, LOGIN_FAIL, JOIN_SUCCESS, JOIN_FAIL } from "./types";
-import { User, JoinForm } from "../types";
-import { AppThunk } from "../store";
-import axios from 'axios';
-import { API_ENDPOINT } from "../constants";
-import { setAlert } from "./alert";
-import { setAuthToken } from "../utils/setCommonHeaders";
-import { saveState } from "../utils/localStorage";
+import { User } from "../types";
+import { AuthActionTypes } from "../actions/auth";
+import { LOGIN_SUCCESS, LOGIN_FAIL, JOIN_SUCCESS, JOIN_FAIL } from "../actions/types";
+import { loadState } from "../utils/localStorage";
 
-interface LoginSuccessAction {
-  type: typeof LOGIN_SUCCESS,
+export interface AuthState {
+  loading: boolean,
   user: User,
-  token: string
+  token: string,
+  error: string
 }
 
-interface JoinSuccessAction {
-  type: typeof JOIN_SUCCESS,
-  user: User,
-  token: string
+const initialState: AuthState = {
+  loading: true,
+  user: loadState('user') || {} as User,
+  token: loadState('token') || '',
+  error: ''
 }
 
-interface LoginFailAction {
-  type: typeof LOGIN_FAIL,
-  message: string
-}
-
-interface JoinFailAction {
-  type: typeof JOIN_FAIL,
-  message: string
-}
-
-export type AuthActionTypes = LoginSuccessAction | LoginFailAction | JoinSuccessAction | JoinFailAction;
-
-const loginAction = (user: User, token: string): AuthActionTypes => {
-  return {
-    type: LOGIN_SUCCESS,
-    user,
-    token
+export default function (state = initialState, action: AuthActionTypes) {
+  switch (action.type) {
+    case JOIN_SUCCESS:
+    case LOGIN_SUCCESS:
+      return { ...state, user: action.user, token: action.token, loading: false };
+    case LOGIN_FAIL:
+      return { ...state, user: {} as User, token: '', loading: false, error: action.message };
+    case JOIN_FAIL:
+      return { ...state, error: action.message };
+    default:
+      return state;
   }
 }
-
-const joinAction = (user: User, token: string): AuthActionTypes => {
-  return {
-    type: JOIN_SUCCESS,
-    user,
-    token
-  }
-}
-
-const loginFailAction = (message: string): AuthActionTypes => {
-  return {
-    type: LOGIN_FAIL,
-    message
-  }
-}
-
-const joinFailAction = (message: string): AuthActionTypes => {
-  return {
-    type: JOIN_FAIL,
-    message
-  }
-}
-
-export const doLogin = (email: string, password: string): AppThunk => async dispatch => {
-  const config = {
-    headers: {
-      'Content-type': 'application/json'
-    }
-  };
-  try {
-    const res = await axios.post(`${API_ENDPOINT}/v2/user/signin`, { email, password }, config);
-
-    if (JSON.parse(res.data.success)) {
-      setAuthToken(res.data.token);
-      saveState('token', res.data.token);
-      saveState('user', res.data.user);
-      dispatch(loginAction(res.data.user, res.data.token));
-    } else {
-      localStorage.removeItem('token');
-      dispatch(setAlert(res.data.message, 'danger'));
-      dispatch(loginFailAction(res.data.message));
-    }
-  } catch (err) {
-    console.log(err);
-    localStorage.removeItem('token');
-    dispatch(setAlert('Unknown error occurred. Plesae retry', 'danger'));
-    dispatch(loginFailAction('Unknown error'));
-  }
-};
-
-export const doJoin = (joinForm: JoinForm): AppThunk => async dispatch => {
-  const config = {
-    headers: {
-      'Content-type': 'application/json'
-    }
-  };
-  try {
-    const res = await axios.post(`${API_ENDPOINT}/v2/user/signup`, joinForm, config);
-
-    if (JSON.parse(res.data.success)) {
-      setAuthToken(res.data.token);
-      saveState('token', res.data.token);
-      saveState('user', res.data.user);
-      dispatch(joinAction(res.data.user, res.data.token));
-    } else {
-      dispatch(setAlert(res.data.message, 'danger'));
-      dispatch(joinFailAction(res.data.message));
-    }
-  } catch (err) {
-    console.log(err);
-    dispatch(setAlert('Unknown error occurred. Plesae retry', 'danger'));
-    dispatch(loginFailAction('Unknown error'));
-  }
-};
